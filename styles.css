@@ -425,7 +425,7 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .section-title-light { color: #fff; }
 
 /* SERVICES */
-.section-services { background: var(--bg); padding: 80px 0; }
+.section-services { background: linear-gradient(180deg, var(--bg) 0%, #0e0e12 50%, #0f1114 100%); padding: 80px 0; }
 .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
 .service-card {
   background: var(--bg-card);
@@ -556,7 +556,7 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .feature-card p { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; }
 
 /* ZONE */
-.section-zone { background: var(--bg); padding: 80px 0; }
+.section-zone { background: linear-gradient(165deg, #0f1114 0%, #141820 40%, #12161c 100%); padding: 80px 0; }
 .zone-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: center; }
 .zone-desc { font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); max-width: 400px; margin-top: 20px; }
 .zone-card {
@@ -614,7 +614,7 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .cta-actions { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
 
 /* CONTACT */
-.section-contact { background: var(--bg); padding: 80px 0; flex-direction: column; }
+.section-contact { background: linear-gradient(180deg, #0c0c0e 0%, #0a0a0a 100%); padding: 80px 0; flex-direction: column; }
 .contact-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 80px; align-items: start; }
 .contact-desc { font-size: 0.95rem; line-height: 1.7; color: var(--text-muted); max-width: 360px; margin-top: 20px; }
 .contact-right { display: flex; flex-direction: column; gap: 12px; }

@@ -4,8 +4,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Scroll reveal with IntersectionObserver
-  const reveals = document.querySelectorAll('.reveal');
+  // All reveal-type elements
+  const allReveals = document.querySelectorAll('.reveal, .reveal-slide-up, .reveal-scale, .reveal-slide-left');
   const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -13,23 +13,41 @@ document.addEventListener('DOMContentLoaded', () => {
         revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
 
-  reveals.forEach(el => revealObserver.observe(el));
+  allReveals.forEach(el => revealObserver.observe(el));
 
   // Nav scroll effect
   const nav = document.getElementById('nav');
-  let lastScroll = 0;
 
   window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY;
-    if (scrollY > 60) {
+    if (window.scrollY > 60) {
       nav.classList.add('scrolled');
     } else {
       nav.classList.remove('scrolled');
     }
-    lastScroll = scrollY;
   }, { passive: true });
+
+  // Parallax backgrounds
+  const parallaxEls = document.querySelectorAll('.parallax-bg');
+
+  function updateParallax() {
+    const scrollY = window.scrollY;
+    parallaxEls.forEach(el => {
+      const parent = el.closest('.hero-bg, .expertise-bg, .cta-banner-bg');
+      if (!parent) return;
+      const rect = parent.getBoundingClientRect();
+      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
+      if (inView) {
+        const speed = 0.15;
+        const offset = scrollY * speed;
+        el.style.transform = 'scale(1.1) translateY(' + offset + 'px)';
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateParallax, { passive: true });
+  updateParallax();
 
   // Hamburger + mobile menu
   const hamburger = document.getElementById('hamburger');
@@ -93,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     anchor.addEventListener('click', (e) => {
       const id = anchor.getAttribute('href');
       if (id === '#') return;
+      if (id === '#zone' && anchor.closest('.zone-layout')) return;
       const target = document.querySelector(id);
       if (target) {
         e.preventDefault();
@@ -100,6 +119,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const y = target.getBoundingClientRect().top + window.scrollY - offset;
         window.scrollTo({ top: y, behavior: 'smooth' });
       }
+    });
+  });
+
+  // Magnetic effect on primary buttons
+  document.querySelectorAll('.btn-primary, .nav-cta').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = 'translate(' + (x * 0.1) + 'px, ' + (y * 0.15) + 'px)';
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
+
+  // Tilt effect on service cards
+  document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = 'translateY(-8px) perspective(600px) rotateX(' + (y * -4) + 'deg) rotateY(' + (x * 4) + 'deg)';
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
     });
   });
 

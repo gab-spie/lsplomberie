@@ -65,19 +65,23 @@ document.addEventListener('DOMContentLoaded', () => {
   statNumbers.forEach(el => statObserver.observe(el));
 
   function animateCounter(el, target) {
-    const duration = 2000;
+    const duration = target > 1000 ? 2800 : 2000;
     const start = performance.now();
+    const formatter = target >= 1000
+      ? new Intl.NumberFormat('fr-FR')
+      : null;
 
     function update(now) {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 4);
-      el.textContent = Math.floor(eased * target);
+      const current = Math.floor(eased * target);
+      el.textContent = formatter ? formatter.format(current) : current;
 
       if (progress < 1) {
         requestAnimationFrame(update);
       } else {
-        el.textContent = target;
+        el.textContent = formatter ? formatter.format(target) : target;
       }
     }
 

@@ -429,7 +429,7 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .section-cta { text-align: center; padding: clamp(80px, 12vw, 160px) 0; }
 .cta-bg { position: absolute; inset: 0; }
 .cta-bg-img { width: 100%; height: 120%; object-fit: cover; position: absolute; top: -10%; will-change: transform; }
-.cta-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, oklch(0.20 0.04 260 / 0.45) 0%, oklch(0.20 0.04 260 / 0.62) 100%); }
+.cta-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, oklch(0.20 0.04 260 / 0.50) 0%, oklch(0.20 0.04 260 / 0.68) 100%); }
 .section-cta .container { position: relative; z-index: 1; }
 .cta-content { max-width: 560px; margin: 0 auto; }
 .cta-title { font-family: var(--font-d); font-size: clamp(1.9rem, 3.8vw, 3rem); margin-bottom: 14px; color: oklch(0.97 0.004 80); }

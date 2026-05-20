@@ -355,6 +355,7 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .stat-row { display: flex; align-items: baseline; justify-content: center; white-space: nowrap; }
 .stat-num { font-family: var(--font-d); font-size: 2.6rem; line-height: 1; color: oklch(0.97 0.004 80); }
 .stat-suffix { font-family: var(--font-d); font-size: 2.6rem; font-weight: 400; color: var(--accent); margin-left: 3px; }
+.stat-plus { font-family: var(--font); font-weight: 800; }
 .stat-label { display: block; font-size: 0.72rem; color: oklch(0.80 0.008 260); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.08em; }
 
 /* Features */

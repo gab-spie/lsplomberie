@@ -93,7 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!parent) return;
       const rect = parent.getBoundingClientRect();
       if (rect.bottom > 0 && rect.top < window.innerHeight) {
-        el.style.transform = 'translateY(' + (scrollY * speed) + 'px) scale(1.08)';
+        const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
+        el.style.transform = 'translateY(' + offset + 'px) scale(1.08)';
       }
     });
   }

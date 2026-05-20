@@ -7,17 +7,19 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---- Lenis Smooth Scroll ---- */
+  /* ---- Detect touch device ---- */
+  var isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  /* ---- Lenis Smooth Scroll (desktop only — native scroll is better on touch) ---- */
   let lenis = null;
-  if (typeof Lenis !== 'undefined') {
+  if (typeof Lenis !== 'undefined' && !isTouchDevice) {
     lenis = new Lenis({
       duration: 1.2,
       easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.8,
-      touchMultiplier: 1.5
+      wheelMultiplier: 0.8
     });
     function raf(time) {
       lenis.raf(time);
@@ -32,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function dismissSplash() {
     if (splash.classList.contains('done')) return;
+    if (lenis) { lenis.scrollTo(0, { immediate: true }); } else { window.scrollTo(0, 0); }
     splash.classList.add('done');
     document.getElementById('nav').classList.add('visible');
     initObservers();
@@ -83,23 +86,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---- Parallax (only transform + opacity — GPU safe) ---- */
-  const parallaxEls = document.querySelectorAll('[data-speed]');
-  function updateParallax() {
-    const scrollY = window.scrollY;
-    parallaxEls.forEach(el => {
-      const speed = parseFloat(el.dataset.speed);
-      const parent = el.parentElement;
-      if (!parent) return;
-      const rect = parent.getBoundingClientRect();
-      if (rect.bottom > 0 && rect.top < window.innerHeight) {
-        const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
-        el.style.transform = 'translateY(' + offset + 'px) scale(1.08)';
-      }
-    });
+  /* ---- Parallax (desktop only — too heavy on mobile) ---- */
+  if (!isTouchDevice) {
+    const parallaxEls = document.querySelectorAll('[data-speed]');
+    function updateParallax() {
+      var scrollY = window.scrollY;
+      parallaxEls.forEach(function(el) {
+        var speed = parseFloat(el.dataset.speed);
+        var parent = el.parentElement;
+        if (!parent) return;
+        var rect = parent.getBoundingClientRect();
+        if (rect.bottom > 0 && rect.top < window.innerHeight) {
+          var offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * speed;
+          el.style.transform = 'translateY(' + offset + 'px) scale(1.08)';
+        }
+      });
+    }
+    window.addEventListener('scroll', updateParallax, { passive: true });
+    updateParallax();
   }
-  window.addEventListener('scroll', updateParallax, { passive: true });
-  updateParallax();
 
   /* ---- 3D tilt + shine on card-shell (high-end-visual) ---- */
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
@@ -144,10 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
        not just triggered once on enter.
      ============================================================ */
   function initScrollDriven() {
-    /* Skip on mobile for performance */
-    const isMobile = window.innerWidth < 768;
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return;
+    var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced || isTouchDevice) return;
+    var isMobile = window.innerWidth < 768;
 
     const vh = window.innerHeight;
     let ticking = false;

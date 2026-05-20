@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /selection.html
+
+Sitemap: https://lsplomberie.fr/sitemap.xml

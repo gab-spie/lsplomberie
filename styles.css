@@ -3,6 +3,36 @@
    Skills: emil-design-eng + impeccable + high-end-visual-design
    ============================================ */
 
+/* --- Self-hosted fonts (RGPD: no Google Fonts external call) --- */
+@font-face {
+  font-family: 'Plus Jakarta Sans';
+  src: url('fonts/plus-jakarta-sans-latin.woff2') format('woff2');
+  font-weight: 300 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Serif Display';
+  src: url('fonts/dm-serif-display-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'DM Serif Display';
+  src: url('fonts/dm-serif-display-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('fonts/jetbrains-mono-latin.woff2') format('woff2');
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* --- Tokens --- */
 :root {
   /* OKLCH — Light theme: warm white / rose-red / navy blue */
@@ -950,7 +980,20 @@ html.lenis, html.lenis body {
 
 /* --- Footer --- */
 .footer { margin-top: auto; padding: 24px 0; width: 100%; }
-.footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--text-d); }
+.footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--text-d); flex-wrap: wrap; gap: 8px; }
+.footer-legal { transition: color 0.2s var(--ease); }
+.footer-legal:hover { color: var(--accent); }
+
+/* --- Legal page --- */
+.legal-page { padding: 120px 0 80px; }
+.legal-content { max-width: 720px; margin: 0 auto; }
+.legal-content h1 { font-family: var(--font-d); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 32px; }
+.legal-content h2 { font-family: var(--font-d); font-size: 1.3rem; margin: 32px 0 12px; color: var(--text); }
+.legal-content p, .legal-content li { font-size: 0.9rem; line-height: 1.75; color: var(--text-m); margin-bottom: 10px; }
+.legal-content ul { padding-left: 20px; margin-bottom: 14px; }
+.legal-content a { color: var(--accent); text-decoration: underline; text-decoration-color: oklch(0.52 0.19 12 / 0.3); text-underline-offset: 2px; transition: text-decoration-color 0.2s; }
+.legal-content a:hover { text-decoration-color: var(--accent); }
+.legal-content section { margin-bottom: 8px; }
 
 /* --- Scroll-driven 3D support (Apple-style) --- */
 .services-grid .card-inner,
@@ -1002,7 +1045,7 @@ html.lenis, html.lenis body {
 }
 
 /* --- Responsive --- */
-@media (max-width: 900px) {
+@media (max-width: 767px) {
   .nav-links { display: none; }
   .nav-cta-text { display: none; }
   .nav-cta { padding: 7px 10px; }
@@ -1031,4 +1074,6 @@ html.lenis, html.lenis body {
   .hero-actions { flex-direction: column; align-items: flex-start; }
   .cta-actions { flex-direction: column; }
   .section-services, .section-zone, .section-contact { padding: 64px 0; }
+  .grain { display: none; }
+  .footer-inner { justify-content: center; text-align: center; }
 }

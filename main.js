@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('nav').classList.add('visible');
     initObservers();
     initScrollDriven();
-    initScramble();
     initStickyPin();
     initTestimonials();
   }

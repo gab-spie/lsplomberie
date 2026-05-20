@@ -586,14 +586,18 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 
 /* --- Testimonials — Auto-scroll carousel --- */
 .section-testi {
+  position: relative;
   padding: clamp(80px, 12vw, 160px) 0 clamp(60px, 8vw, 100px);
-  background: linear-gradient(175deg, var(--bg) 0%, oklch(0.95 0.008 260) 50%, var(--bg) 100%);
   overflow: hidden;
 }
+.testi-bg { position: absolute; inset: 0; }
+.testi-bg-img { width: 100%; height: 120%; object-fit: cover; position: absolute; top: -10%; will-change: transform; }
+.testi-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, oklch(0.20 0.04 260 / 0.88) 0%, oklch(0.20 0.04 260 / 0.94) 100%); }
 .testi-subtitle {
-  font-size: 0.85rem; color: var(--text-d); margin-top: 10px;
+  font-size: 0.85rem; color: oklch(0.75 0.01 260); margin-top: 10px;
 }
 .testi-overflow {
+  position: relative; z-index: 1;
   overflow: hidden;
   margin: 48px 0 56px;
   mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
@@ -626,8 +630,10 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .testi-card > .testi-author { background: none; border-radius: 0; }
 .testi-card {
   padding: 28px 24px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
+  background: oklch(0.97 0.004 80 / 0.08);
+  border: 1px solid oklch(0.97 0.004 80 / 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .testi-stars {
   color: oklch(0.72 0.17 70);
@@ -638,7 +644,7 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .testi-text {
   font-size: 0.88rem;
   line-height: 1.65;
-  color: var(--text);
+  color: oklch(0.92 0.005 80);
   flex: 1;
   margin-bottom: 18px;
 }
@@ -649,43 +655,79 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   font-size: 0.75rem;
 }
 .testi-author strong {
-  color: var(--text);
+  color: oklch(0.95 0.004 80);
   font-weight: 600;
 }
 .testi-author span {
-  color: var(--text-d);
+  color: oklch(0.65 0.01 260);
   font-family: var(--font-m);
   font-size: 0.65rem;
 }
 
-/* Certifications row */
-.certif-row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 28px 0 0;
-  border-top: 1px solid var(--border);
+/* Certifications / Partenaires */
+.certif-section {
+  padding-top: 48px;
+  border-top: 1px solid oklch(0.97 0.004 80 / 0.1);
 }
-.certif-label {
+.certif-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.certif-title {
+  font-family: var(--font-d);
+  font-size: 1.3rem;
+  color: oklch(0.95 0.004 80);
+  display: block;
+  margin-bottom: 8px;
+}
+.certif-desc {
+  font-size: 0.82rem;
+  color: oklch(0.70 0.01 260);
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+.certif-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.certif-card {
+  background: oklch(0.97 0.004 80 / 0.06);
+  border: 1px solid oklch(0.97 0.004 80 / 0.1);
+  border-radius: var(--r-xl);
+  padding: 5px;
+  transition: border-color 0.3s var(--ease);
+}
+.certif-card:hover { border-color: oklch(0.97 0.004 80 / 0.2); }
+.certif-card-inner {
+  background: oklch(0.97 0.004 80 / 0.04);
+  border-radius: calc(var(--r-xl) - 5px);
+  padding: 24px 20px;
+  text-align: center;
+}
+.certif-name {
+  display: block;
+  font-family: var(--font-d);
+  font-size: 1.4rem;
+  color: oklch(0.97 0.004 80);
+  margin-bottom: 4px;
+}
+.certif-type {
+  display: block;
   font-family: var(--font-m);
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--text-d);
-}
-.certif-badges {
-  display: flex;
-  gap: 10px;
-}
-.certif-badge {
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 6px 16px;
-  border-radius: 100px;
-  background: var(--accent-soft);
   color: var(--accent);
-  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+.certif-info {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: oklch(0.70 0.01 260);
 }
 
 /* --- Film Grain Overlay (physical paper feel) --- */
@@ -822,12 +864,23 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   color: var(--accent);
   margin-bottom: 20px;
 }
-.sticky-card h3 {
+.sticky-card-img { padding: 0; overflow: hidden; }
+.sticky-card-visual {
+  height: 180px;
+  overflow: hidden;
+}
+.sticky-card-visual img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+.sticky-step.active .sticky-card-visual img { transform: scale(1.04); }
+.sticky-card-body { padding: 28px 28px 32px; }
+.sticky-card h3, .sticky-card-body h3 {
   font-family: var(--font-d);
   font-size: 1.5rem;
   margin-bottom: 12px;
 }
-.sticky-card p {
+.sticky-card p, .sticky-card-body p {
   font-size: 0.88rem;
   line-height: 1.65;
   color: var(--text-m);

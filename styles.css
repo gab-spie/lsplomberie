@@ -588,6 +588,31 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .footer { margin-top: auto; padding: 24px 0; width: 100%; }
 .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--text-d); }
 
+/* --- Scroll-driven 3D support (Apple-style) --- */
+.services-grid .card-inner,
+.stat-inner,
+.zone-card .card-inner {
+  will-change: transform;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.bento-card {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Hero parallax layers — JS overrides transform */
+.hero-title,
+.hero-desc,
+.hero-actions {
+  will-change: transform, opacity;
+}
+
+/* Section titles — smooth clip reveal */
+.section-title {
+  will-change: transform, opacity;
+}
+
 /* --- Animations (Emil stagger, ease-out, no scale(0)) --- */
 .anim {
   opacity: 0;

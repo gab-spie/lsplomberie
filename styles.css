@@ -292,7 +292,6 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 /* --- Services — double-bezel card architecture --- */
 .section-services { background: linear-gradient(175deg, var(--bg) 0%, oklch(0.95 0.006 80) 100%); }
 .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-.services-grid .card-shell:last-child { grid-column: 1 / -1; max-width: 50%; justify-self: center; }
 
 /* Double-bezel: outer shell + inner core */
 .card-shell {

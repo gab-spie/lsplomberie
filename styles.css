@@ -786,11 +786,11 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   position: relative;
   padding: 0;
   overflow: visible;
+  background: var(--bg);
 }
 .sticky-wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 300vh;
   position: relative;
 }
 .sticky-left {

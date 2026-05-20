@@ -584,6 +584,277 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   margin-top: 12px;
 }
 
+/* --- Testimonials — Auto-scroll carousel --- */
+.section-testi {
+  padding: clamp(80px, 12vw, 160px) 0 clamp(60px, 8vw, 100px);
+  background: linear-gradient(175deg, var(--bg) 0%, oklch(0.95 0.008 260) 50%, var(--bg) 100%);
+  overflow: hidden;
+}
+.testi-subtitle {
+  font-size: 0.85rem; color: var(--text-d); margin-top: 10px;
+}
+.testi-overflow {
+  overflow: hidden;
+  margin: 48px 0 56px;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+.testi-track {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  will-change: transform;
+}
+.testi-card {
+  flex-shrink: 0;
+  width: 320px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 6px;
+}
+.testi-card > * {
+  background: var(--bg-card);
+  border-radius: calc(var(--r-xl) - 6px);
+}
+/* Override — inner content area */
+.testi-card {
+  display: flex; flex-direction: column;
+}
+.testi-card > .testi-stars,
+.testi-card > .testi-text,
+.testi-card > .testi-author { background: none; border-radius: 0; }
+.testi-card {
+  padding: 28px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+.testi-stars {
+  color: oklch(0.72 0.17 70);
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+.testi-text {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text);
+  flex: 1;
+  margin-bottom: 18px;
+}
+.testi-author {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+}
+.testi-author strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.testi-author span {
+  color: var(--text-d);
+  font-family: var(--font-m);
+  font-size: 0.65rem;
+}
+
+/* Certifications row */
+.certif-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 28px 0 0;
+  border-top: 1px solid var(--border);
+}
+.certif-label {
+  font-family: var(--font-m);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-d);
+}
+.certif-badges {
+  display: flex;
+  gap: 10px;
+}
+.certif-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 100px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+
+/* --- Film Grain Overlay (physical paper feel) --- */
+.grain {
+  position: fixed; inset: 0; z-index: 9000;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+/* --- Marquee Ticker --- */
+.marquee {
+  overflow: hidden;
+  padding: 28px 0;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: max-content;
+  animation: marqueeScroll 25s linear infinite;
+}
+.marquee-reverse .marquee-track {
+  animation-direction: reverse;
+  animation-duration: 30s;
+}
+.marquee-item {
+  font-family: var(--font-d);
+  font-size: clamp(1.6rem, 3vw, 2.8rem);
+  font-weight: 400;
+  color: var(--text);
+  white-space: nowrap;
+  padding: 0 24px;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+.marquee-item:hover { opacity: 1; }
+.marquee-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  opacity: 0.5;
+}
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* --- Sticky Pin Section (Apple-style) --- */
+.section-sticky {
+  position: relative;
+  padding: 0;
+  overflow: visible;
+}
+.sticky-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 300vh;
+  position: relative;
+}
+.sticky-left {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(24px, 5vw, 80px);
+}
+.sticky-text {
+  max-width: 420px;
+}
+.sticky-eyebrow {
+  font-family: var(--font-m);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+.sticky-heading {
+  font-family: var(--font-d);
+  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.08;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.sticky-desc {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-m);
+  max-width: 360px;
+}
+.sticky-right {
+  position: relative;
+  padding: 0 clamp(24px, 5vw, 80px);
+}
+.sticky-step {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sticky-card-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+  padding: 6px;
+  max-width: 400px;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(40px) scale(0.95);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.sticky-step.active .sticky-card-wrap {
+  opacity: 1;
+  transform: none;
+}
+.sticky-card {
+  background: var(--bg-card);
+  border-radius: calc(var(--r-xl) - 6px);
+  padding: 40px 32px;
+  box-shadow: 0 4px 24px oklch(0.20 0.035 260 / 0.06), inset 0 1px 0 oklch(0.99 0.002 80 / 0.8);
+}
+.sticky-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: var(--accent-soft);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.sticky-card h3 {
+  font-family: var(--font-d);
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+.sticky-card p {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--text-m);
+}
+
+/* Progress dots for sticky */
+.sticky-progress {
+  position: absolute;
+  left: -32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --- Lenis smooth scroll body --- */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
 /* --- Footer --- */
 .footer { margin-top: auto; padding: 24px 0; width: 100%; }
 .footer-inner { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--text-d); }
@@ -633,6 +904,8 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   .scroll-cue-line { animation: none; }
   .hero-bg-img { animation: none; }
   .card-visual::after, .zone-card::before { transition-duration: 0.01ms !important; }
+  .marquee-track { animation: none !important; }
+  .sticky-card-wrap { opacity: 1 !important; transform: none !important; }
 }
 
 /* --- Responsive --- */
@@ -646,6 +919,12 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   .features-row { grid-template-columns: 1fr 1fr; }
   .zone-layout { grid-template-columns: 1fr; gap: 36px; }
   .hero-content { padding-top: 80px; }
+  /* Sticky pin — stack on mobile */
+  .sticky-wrap { grid-template-columns: 1fr; min-height: auto; }
+  .sticky-left { position: relative; height: auto; padding: clamp(64px, 10vw, 120px) clamp(16px, 4vw, 48px) 40px; }
+  .sticky-right { padding: 0 clamp(16px, 4vw, 48px) clamp(64px, 10vw, 120px); }
+  .sticky-step { height: auto; padding: 20px 0; }
+  .sticky-card-wrap { opacity: 1; transform: none; }
 }
 
 @media (max-width: 600px) {

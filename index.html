@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <!-- Lenis smooth scroll -->
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 </head>
 <body>
 
@@ -99,12 +101,46 @@
       </div>
     </section>
 
+    <!-- MARQUEE TICKER -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-item">Chauffage</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Sanitaire</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Climatisation</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Adoucisseur</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">D&eacute;pannage</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Entretien</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Installation</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Chauffage</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Sanitaire</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Climatisation</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Adoucisseur</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">D&eacute;pannage</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Entretien</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Installation</span>
+        <span class="marquee-dot"></span>
+      </div>
+    </div>
+
     <!-- SERVICES -->
     <section class="section section-services" id="services">
       <div class="container">
         <div class="section-intro">
           <div class="section-tag anim"><span class="tag-num">02</span><span class="tag-dash">&mdash;</span> Nos&nbsp;m&eacute;tiers</div>
-          <h2 class="section-title anim">Des solutions pour<br>chaque&nbsp;besoin</h2>
+          <h2 class="section-title anim" data-scramble>Des solutions pour<br>chaque&nbsp;besoin</h2>
         </div>
         <div class="services-grid">
           <article class="card-shell anim" style="--i:0" data-hover>
@@ -163,6 +199,76 @@
       </div>
     </section>
 
+    <!-- STICKY PIN — Apple-style feature reveal -->
+    <section class="section section-sticky" id="sticky">
+      <div class="sticky-wrap">
+        <div class="sticky-left">
+          <div class="sticky-text" data-sticky-step="0">
+            <div class="sticky-eyebrow">Mon engagement</div>
+            <h2 class="sticky-heading" data-scramble>Qualit&eacute; &amp;<br>proximit&eacute;</h2>
+            <p class="sticky-desc">Chaque intervention est r&eacute;alis&eacute;e avec le m&ecirc;me soin, qu'il s'agisse d'une urgence ou d'un projet de r&eacute;novation&nbsp;compl&egrave;te.</p>
+          </div>
+        </div>
+        <div class="sticky-right">
+          <div class="sticky-step" data-step="0">
+            <div class="sticky-card-wrap">
+              <div class="sticky-card">
+                <div class="sticky-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256"><path fill="currentColor" d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM116.69,53.66a8,8,0,0,0,11.32-11.32l-48-48a8,8,0,0,0-11.32,0l-48,48A8,8,0,0,0,32,53.66L74.34,11.31ZM187.31,202.34a8,8,0,0,0-11.32,11.32L218.34,256a8,8,0,0,0,11.32,0l48-48a8,8,0,0,0-11.32-11.32L224,239.03Z"/></svg>
+                </div>
+                <h3>Diagnostic sur place</h3>
+                <p>Je me d&eacute;place pour &eacute;valuer la situation et vous proposer la solution la plus adapt&eacute;e et &eacute;conomique.</p>
+              </div>
+            </div>
+          </div>
+          <div class="sticky-step" data-step="1">
+            <div class="sticky-card-wrap">
+              <div class="sticky-card">
+                <div class="sticky-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256"><path fill="currentColor" d="M232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-40-24a8,8,0,0,0-8-8H147.31L181.66,61.66a8,8,0,0,0-11.32-11.32L128,92.69,85.66,50.34A8,8,0,0,0,74.34,61.66L108.69,96H72a8,8,0,0,0,0,16h48v24H72a8,8,0,0,0,0,16h48v48a8,8,0,0,0,16,0V152h48a8,8,0,0,0,0-16H136V112h48A8,8,0,0,0,192,104Z"/></svg>
+                </div>
+                <h3>Devis transparent</h3>
+                <p>Un devis d&eacute;taill&eacute; et gratuit avant chaque intervention. Pas de surprise, pas de frais cach&eacute;s.</p>
+              </div>
+            </div>
+          </div>
+          <div class="sticky-step" data-step="2">
+            <div class="sticky-card-wrap">
+              <div class="sticky-card">
+                <div class="sticky-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256"><path fill="currentColor" d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></svg>
+                </div>
+                <h3>Travail garanti</h3>
+                <p>Mat&eacute;riaux certifi&eacute;s, travail soign&eacute;. Chaque intervention est garantie pour votre tranquillit&eacute;.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE TICKER 2 -->
+    <div class="marquee marquee-reverse" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-item">20+ ans</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">18 000+ interventions</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Devis gratuit</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Varennes-le-Grand</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">20+ ans</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">18 000+ interventions</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Devis gratuit</span>
+        <span class="marquee-dot"></span>
+        <span class="marquee-item">Varennes-le-Grand</span>
+        <span class="marquee-dot"></span>
+      </div>
+    </div>
+
     <!-- EXPERTISE -->
     <section class="section section-expertise" id="expertise">
       <div class="expertise-bg">
@@ -173,7 +279,7 @@
         <div class="expertise-layout">
           <div class="expertise-left">
             <div class="section-tag section-tag-light anim"><span class="tag-num">03</span><span class="tag-dash">&mdash;</span> Pourquoi me&nbsp;choisir</div>
-            <h2 class="section-title section-title-light anim">Un savoir-faire<br>reconnu</h2>
+            <h2 class="section-title section-title-light anim" data-scramble>Un savoir-faire<br>reconnu</h2>
             <p class="expertise-desc anim">
               J'exerce depuis plus de 20&nbsp;ans dans la r&eacute;gion.
               Qualit&eacute; du travail et satisfaction client avant&nbsp;tout.
@@ -233,7 +339,7 @@
         <div class="zone-layout">
           <div class="zone-left">
             <div class="section-tag anim"><span class="tag-num">04</span><span class="tag-dash">&mdash;</span> Proximit&eacute;</div>
-            <h2 class="section-title anim">Zone<br>d'intervention</h2>
+            <h2 class="section-title anim" data-scramble>Zone<br>d'intervention</h2>
             <p class="zone-desc anim">
               Bas&eacute; &agrave; Varennes-le-Grand, j'interviens dans un rayon
               de 30&nbsp;km pour une r&eacute;activit&eacute;&nbsp;maximale.
@@ -258,6 +364,123 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS — Real Google Reviews -->
+    <section class="section section-testi">
+      <div class="container">
+        <div class="section-intro" style="text-align:center;">
+          <div class="section-tag anim">Avis clients</div>
+          <h2 class="section-title anim" data-scramble>Ce qu'ils<br>en&nbsp;pensent</h2>
+          <p class="testi-subtitle anim">Tous les avis proviennent de Google</p>
+        </div>
+      </div>
+      <div class="testi-overflow">
+        <div class="testi-track">
+          <!-- Reviews duplicated for infinite scroll -->
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Artisan tr&egrave;s professionnel s&eacute;rieux, conna&icirc;t tr&egrave;s bien son m&eacute;tier, tr&egrave;s sympathique. Je recommande&nbsp;fortement.</p>
+            <div class="testi-author"><strong>Dominique G.</strong><span>il y a 6 mois</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Artisan comp&eacute;tent, honn&ecirc;te et s&eacute;rieux qui se d&eacute;place pour une urgence le samedi. Un grand merci. Je&nbsp;recommande.</p>
+            <div class="testi-author"><strong>Izzie S.</strong><span>il y a 9 mois</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Appel&eacute; pour un d&eacute;pannage rapide, il est arriv&eacute; en 1h30 comme indiqu&eacute;. Il a pris le temps de tout v&eacute;rifier. Bon&nbsp;relationnel.</p>
+            <div class="testi-author"><strong>Sixtine M.</strong><span>il y a 7 ans</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Une personne qui conna&icirc;t son m&eacute;tier, qui est &agrave; l'&eacute;coute et surtout un travail s&eacute;rieux. Je&nbsp;recommande.</p>
+            <div class="testi-author"><strong>Semin T.</strong><span>il y a 11 mois</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Tr&egrave;s bon professionnel. Intervention rapide en cas de&nbsp;probl&egrave;mes.</p>
+            <div class="testi-author"><strong>Christophe P.</strong><span>il y a 5 ans</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">D&eacute;pannage ultra rapide, de qualit&eacute;, comme d'habitude.</p>
+            <div class="testi-author"><strong>Christophe B.</strong><span>il y a 5 ans</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Tr&egrave;s pro, tr&egrave;s r&eacute;actif.</p>
+            <div class="testi-author"><strong>Sylvain G.</strong><span>il y a 9 mois</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Disponible et consciencieux. D'un grand professionnalisme, ce qui est rare de nos&nbsp;jours&nbsp;!</p>
+            <div class="testi-author"><strong>M&eacute;diath&egrave;que A.</strong><span>il y a 6 ans</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Plombier r&eacute;actif et conforme aux&nbsp;devis.</p>
+            <div class="testi-author"><strong>Lucas M.</strong><span>il y a 3 ans</span></div>
+          </div>
+          <!-- Duplicate for infinite loop -->
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Artisan tr&egrave;s professionnel s&eacute;rieux, conna&icirc;t tr&egrave;s bien son m&eacute;tier, tr&egrave;s sympathique. Je recommande&nbsp;fortement.</p>
+            <div class="testi-author"><strong>Dominique G.</strong><span>il y a 6 mois</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Artisan comp&eacute;tent, honn&ecirc;te et s&eacute;rieux qui se d&eacute;place pour une urgence le samedi. Un grand merci. Je&nbsp;recommande.</p>
+            <div class="testi-author"><strong>Izzie S.</strong><span>il y a 9 mois</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Appel&eacute; pour un d&eacute;pannage rapide, il est arriv&eacute; en 1h30 comme indiqu&eacute;. Il a pris le temps de tout v&eacute;rifier. Bon&nbsp;relationnel.</p>
+            <div class="testi-author"><strong>Sixtine M.</strong><span>il y a 7 ans</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Une personne qui conna&icirc;t son m&eacute;tier, qui est &agrave; l'&eacute;coute et surtout un travail s&eacute;rieux. Je&nbsp;recommande.</p>
+            <div class="testi-author"><strong>Semin T.</strong><span>il y a 11 mois</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Tr&egrave;s bon professionnel. Intervention rapide en cas de&nbsp;probl&egrave;mes.</p>
+            <div class="testi-author"><strong>Christophe P.</strong><span>il y a 5 ans</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">D&eacute;pannage ultra rapide, de qualit&eacute;, comme d'habitude.</p>
+            <div class="testi-author"><strong>Christophe B.</strong><span>il y a 5 ans</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Tr&egrave;s pro, tr&egrave;s r&eacute;actif.</p>
+            <div class="testi-author"><strong>Sylvain G.</strong><span>il y a 9 mois</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Disponible et consciencieux. D'un grand professionnalisme, ce qui est rare de nos&nbsp;jours&nbsp;!</p>
+            <div class="testi-author"><strong>M&eacute;diath&egrave;que A.</strong><span>il y a 6 ans</span></div>
+          </div>
+          <div class="testi-card">
+            <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testi-text">Plombier r&eacute;actif et conforme aux&nbsp;devis.</p>
+            <div class="testi-author"><strong>Lucas M.</strong><span>il y a 3 ans</span></div>
+          </div>
+        </div>
+      </div>
+      <!-- Certifications -->
+      <div class="container">
+        <div class="certif-row anim">
+          <span class="certif-label">Certifications</span>
+          <div class="certif-badges">
+            <span class="certif-badge">Qualibat</span>
+            <span class="certif-badge">Qualigaz</span>
           </div>
         </div>
       </div>
@@ -357,6 +580,9 @@
     </section>
 
   </main>
+
+  <!-- Film grain overlay -->
+  <div class="grain" aria-hidden="true"></div>
 
   <script src="main.js"></script>
 </body>

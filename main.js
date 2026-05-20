@@ -2,27 +2,49 @@
    LS PLOMBERIE — Premium Interactions
    Skills: emil-design-eng + high-end-visual-design
    Inspired by Apple AirPods Pro scroll-driven 3D
+   + Lenis smooth scroll, grain, marquee, sticky pin, text scramble
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---- Lenis Smooth Scroll ---- */
+  let lenis = null;
+  if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: function(t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 0.8,
+      touchMultiplier: 1.5
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+  }
 
   /* ---- Splash — carte de visite ---- */
   const splash = document.getElementById('splash');
   const splashEnter = document.getElementById('splashEnter');
 
   function dismissSplash() {
+    if (splash.classList.contains('done')) return;
     splash.classList.add('done');
     document.getElementById('nav').classList.add('visible');
     initObservers();
     initScrollDriven();
+    initScramble();
+    initStickyPin();
+    initTestimonials();
   }
 
   splashEnter.addEventListener('click', dismissSplash);
 
   /* Auto-dismiss after 6s if user hasn't clicked */
-  setTimeout(() => {
-    if (!splash.classList.contains('done')) dismissSplash();
-  }, 6000);
+  setTimeout(dismissSplash, 6000);
 
   /* ---- Nav scroll ---- */
   const nav = document.getElementById('nav');
@@ -330,6 +352,141 @@ document.addEventListener('DOMContentLoaded', () => {
       if (t < 1) requestAnimationFrame(step);
       else el.textContent = fmt ? fmt.format(target) : target;
     })(start);
+  }
+
+  /* ============================================================
+     TEXT SCRAMBLE — Letters decode/unscramble on scroll enter
+     ============================================================ */
+  function initScramble() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const scrambleEls = document.querySelectorAll('[data-scramble]');
+
+    const scrambleObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          scrambleText(entry.target);
+          scrambleObs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    scrambleEls.forEach(el => {
+      el._originalHTML = el.innerHTML;
+      scrambleObs.observe(el);
+    });
+
+    function scrambleText(el) {
+      const original = el._originalHTML;
+      /* Extract text nodes only, preserve HTML tags */
+      const textContent = el.textContent;
+      const letters = textContent.split('');
+      const duration = 800;
+      const stagger = 30;
+      const start = performance.now();
+
+      function step(now) {
+        const elapsed = now - start;
+        let result = '';
+        let idx = 0;
+
+        for (let i = 0; i < original.length; i++) {
+          const c = original[i];
+          /* Skip HTML tags */
+          if (c === '<') {
+            const end = original.indexOf('>', i);
+            result += original.substring(i, end + 1);
+            i = end;
+            continue;
+          }
+          if (c === '&') {
+            const end = original.indexOf(';', i);
+            if (end > -1 && end - i < 8) {
+              const letterTime = idx * stagger;
+              if (elapsed > letterTime + duration * 0.6) {
+                result += original.substring(i, end + 1);
+              } else if (elapsed > letterTime) {
+                result += chars[Math.floor(Math.random() * chars.length)];
+              } else {
+                result += chars[Math.floor(Math.random() * chars.length)];
+              }
+              i = end;
+              idx++;
+              continue;
+            }
+          }
+          if (c === ' ' || c === '\n') {
+            result += c;
+            continue;
+          }
+          const letterTime = idx * stagger;
+          if (elapsed > letterTime + duration * 0.6) {
+            result += c;
+          } else if (elapsed > letterTime) {
+            result += chars[Math.floor(Math.random() * chars.length)];
+          } else {
+            result += chars[Math.floor(Math.random() * chars.length)];
+          }
+          idx++;
+        }
+
+        el.innerHTML = result;
+        if (elapsed < duration + letters.length * stagger) {
+          requestAnimationFrame(step);
+        } else {
+          el.innerHTML = original;
+        }
+      }
+      requestAnimationFrame(step);
+    }
+  }
+
+  /* ============================================================
+     STICKY PIN SECTION — Apple-style pinned content reveal
+     ============================================================ */
+  function initStickyPin() {
+    const steps = document.querySelectorAll('.sticky-step');
+    if (!steps.length) return;
+
+    const stickyObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        } else {
+          entry.target.classList.remove('active');
+        }
+      });
+    }, { threshold: 0.5, rootMargin: '-10% 0px -10% 0px' });
+
+    steps.forEach(s => stickyObs.observe(s));
+  }
+
+  /* ============================================================
+     TESTIMONIALS — Auto-scroll carousel
+     ============================================================ */
+  function initTestimonials() {
+    const track = document.querySelector('.testi-track');
+    if (!track) return;
+
+    let scrollAmount = 0;
+    let paused = false;
+    const speed = 0.4;
+
+    track.addEventListener('mouseenter', () => paused = true);
+    track.addEventListener('mouseleave', () => paused = false);
+    track.addEventListener('touchstart', () => paused = true, { passive: true });
+    track.addEventListener('touchend', () => { setTimeout(() => paused = false, 2000); });
+
+    function autoScroll() {
+      if (!paused) {
+        scrollAmount += speed;
+        if (scrollAmount >= track.scrollWidth / 2) {
+          scrollAmount = 0;
+        }
+        track.style.transform = 'translateX(-' + scrollAmount + 'px)';
+      }
+      requestAnimationFrame(autoScroll);
+    }
+    requestAnimationFrame(autoScroll);
   }
 
 });

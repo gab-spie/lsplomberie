@@ -62,10 +62,10 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .splash-inner { text-align: center; }
 .splash-logo { margin-bottom: 24px; }
 .splash-ls {
-  font-family: var(--font-d); font-size: clamp(4rem, 10vw, 7rem);
+  font-family: var(--font-d); font-size: clamp(1.8rem, 4vw, 2.8rem);
   color: transparent;
-  -webkit-text-stroke: 2px var(--accent);
-  font-style: normal; letter-spacing: 0.05em; line-height: 1;
+  -webkit-text-stroke: 1.5px var(--navy);
+  font-style: normal; letter-spacing: 0.15em; line-height: 1;
   display: block;
   animation: splashUp 0.8s var(--ease) 0.2s both;
 }
@@ -74,7 +74,7 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   font-weight: 600; color: transparent;
   -webkit-text-stroke: 1.2px var(--navy);
   text-transform: uppercase; letter-spacing: 0.35em;
-  display: block; margin-top: 8px;
+  display: block; margin-top: 6px;
   animation: splashUp 0.8s var(--ease) 0.4s both;
 }
 .splash-line {
@@ -129,7 +129,7 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 }
 .nav.scrolled .nav-pill { background: oklch(0.99 0.002 80 / 0.92); border-color: var(--border-h); box-shadow: 0 8px 32px oklch(0.20 0.035 260 / 0.1); }
 .nav-logo { font-family: var(--font-d); font-size: 1.1rem; white-space: nowrap; margin-right: auto; display: flex; align-items: baseline; gap: 4px; }
-.logo-ls { color: transparent; -webkit-text-stroke: 1.2px var(--accent); }
+.logo-ls { color: transparent; -webkit-text-stroke: 1px var(--navy); }
 .logo-plomberie { font-family: var(--font); font-weight: 600; font-size: 0.58rem; color: transparent; -webkit-text-stroke: 0.8px var(--navy); text-transform: uppercase; letter-spacing: 0.3em; }
 .nav-links { display: flex; gap: 2px; }
 .nav-links a {

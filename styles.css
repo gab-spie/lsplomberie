@@ -350,7 +350,7 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .section-expertise { padding: clamp(80px, 12vw, 160px) 0; position: relative; }
 .expertise-bg { position: absolute; inset: 0; }
 .expertise-bg-img { width: 100%; height: 120%; object-fit: cover; position: absolute; top: -10%; will-change: transform; }
-.expertise-overlay { position: absolute; inset: 0; background: linear-gradient(145deg, oklch(0.20 0.04 260 / 0.92), oklch(0.20 0.04 260 / 0.86)); }
+.expertise-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, var(--bg) 0%, oklch(0.20 0.04 260 / 0.92) 15%, oklch(0.20 0.04 260 / 0.86) 100%); }
 .section-expertise .container { position: relative; z-index: 1; }
 .expertise-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; margin-bottom: 56px; }
 .expertise-desc { font-size: 0.92rem; line-height: 1.7; color: oklch(0.80 0.008 260); max-width: 400px; margin-top: 18px; text-shadow: 0 1px 6px oklch(0.15 0.04 260 / 0.6); }
@@ -664,55 +664,59 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   font-size: 0.65rem;
 }
 
-/* Certifications / Partenaires */
+/* --- Partenaires / Certifications — Light section --- */
+.section-certif {
+  padding: clamp(60px, 8vw, 100px) 0;
+  background: linear-gradient(175deg, var(--bg) 0%, oklch(0.95 0.006 80) 100%);
+}
 .certif-section {
-  padding-top: 48px;
-  border-top: 1px solid oklch(0.97 0.004 80 / 0.1);
+  padding-top: 0;
 }
 .certif-header {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 .certif-title {
   font-family: var(--font-d);
-  font-size: 1.3rem;
-  color: oklch(0.95 0.004 80);
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  color: var(--text);
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .certif-desc {
-  font-size: 0.82rem;
-  color: oklch(0.70 0.01 260);
-  max-width: 400px;
+  font-size: 0.88rem;
+  color: var(--text-m);
+  max-width: 420px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 .certif-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  max-width: 500px;
+  gap: 16px;
+  max-width: 560px;
   margin: 0 auto;
 }
 .certif-card {
-  background: oklch(0.97 0.004 80 / 0.06);
-  border: 1px solid oklch(0.97 0.004 80 / 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: var(--r-xl);
   padding: 5px;
-  transition: border-color 0.3s var(--ease);
+  transition: border-color 0.3s var(--ease), transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
 }
-.certif-card:hover { border-color: oklch(0.97 0.004 80 / 0.2); }
+.certif-card:hover { border-color: var(--border-h); transform: translateY(-3px); box-shadow: 0 8px 28px oklch(0.20 0.035 260 / 0.08); }
 .certif-card-inner {
-  background: oklch(0.97 0.004 80 / 0.04);
+  background: var(--bg-card);
   border-radius: calc(var(--r-xl) - 5px);
-  padding: 24px 20px;
+  padding: 32px 24px;
   text-align: center;
+  box-shadow: 0 2px 12px oklch(0.20 0.035 260 / 0.04), inset 0 1px 0 oklch(0.99 0.002 80 / 0.8);
 }
 .certif-name {
   display: block;
   font-family: var(--font-d);
-  font-size: 1.4rem;
-  color: oklch(0.97 0.004 80);
+  font-size: 1.6rem;
+  color: var(--text);
   margin-bottom: 4px;
 }
 .certif-type {
@@ -722,12 +726,12 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: var(--accent);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .certif-info {
-  font-size: 0.75rem;
-  line-height: 1.5;
-  color: oklch(0.70 0.01 260);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text-m);
 }
 
 /* --- Film Grain Overlay (physical paper feel) --- */
@@ -986,6 +990,7 @@ html.lenis, html.lenis body {
   .stats-grid { grid-template-columns: 1fr; }
   .features-row { grid-template-columns: 1fr; }
   .bento-grid { grid-template-columns: 1fr; }
+  .certif-grid { grid-template-columns: 1fr; }
   .hero-actions { flex-direction: column; align-items: flex-start; }
   .cta-actions { flex-direction: column; }
   .section-services, .section-zone, .section-contact { padding: 64px 0; }

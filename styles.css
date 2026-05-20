@@ -1076,4 +1076,5 @@ html.lenis, html.lenis body {
   .section-services, .section-zone, .section-contact { padding: 64px 0; }
   .grain { display: none; }
   .footer-inner { justify-content: center; text-align: center; }
+  .hero-bg-img { animation: none; }
 }

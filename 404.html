@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page introuvable &mdash; LS Plomberie</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <nav class="nav visible" id="nav">
+    <div class="nav-pill">
+      <a href="/" class="nav-logo"><span class="logo-ls">LS</span><span class="logo-plomberie">Plomberie</span></a>
+      <div class="nav-links">
+        <a href="/#services">Services</a>
+        <a href="/#expertise">Expertise</a>
+        <a href="/#zone">Zone</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <a href="tel:0683395937" class="nav-cta">
+        <span class="nav-cta-text">Appeler</span>
+        <span class="cta-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 256 256"><path fill="currentColor" d="M222.37,158.46l-47.11-21.11-.18-.08a16,16,0,0,0-15.18,1.74,8.08,8.08,0,0,0-.74.56L137.58,156.3a3.87,3.87,0,0,1-3.87.27c-7.67-4.15-20.16-15.07-29.48-24.38s-20.24-21.82-24.38-29.49a3.87,3.87,0,0,1,.27-3.87l16.73-21.58a8.08,8.08,0,0,0,.56-.74,16,16,0,0,0,1.74-15.18c0-.06-.05-.12-.08-.18L78.14,14.23A16,16,0,0,0,62.07,4.39,48.14,48.14,0,0,0,16,48c0,88.22,71.78,160,160,160a48.14,48.14,0,0,0,43.61-46.07A16,16,0,0,0,222.37,158.46Z"/></svg>
+        </span>
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+      <a href="/#services" class="mobile-link">Services</a>
+      <a href="/#expertise" class="mobile-link">Expertise</a>
+      <a href="/#zone" class="mobile-link">Zone</a>
+      <a href="/#contact" class="mobile-link">Contact</a>
+      <a href="tel:0683395937" class="mobile-phone">06&nbsp;83&nbsp;39&nbsp;59&nbsp;37</a>
+    </div>
+  </div>
+
+  <main class="legal-page">
+    <div class="container">
+      <div class="legal-content" style="text-align:center; padding-top:120px; padding-bottom:120px;">
+        <p class="section-tag" style="justify-content:center;"><span class="tag-dot"></span>Erreur 404</p>
+        <h1 style="margin-bottom:24px;">Page introuvable</h1>
+        <p style="max-width:480px; margin:0 auto 40px; opacity:0.7;">
+          La page que vous recherchez n'existe pas ou a &eacute;t&eacute; d&eacute;plac&eacute;e.
+        </p>
+        <a href="/" class="btn btn-primary">Retour &agrave; l'accueil</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer" style="position:relative;">
+    <div class="container">
+      <div class="footer-inner">
+        <span>LS Plomberie &mdash; Laurent Spiewak</span>
+        <span>&copy; 2026 &middot; Tous droits r&eacute;serv&eacute;s</span>
+        <a href="mentions-legales.html" class="footer-legal">Mentions l&eacute;gales &amp; RGPD</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('hamburger').addEventListener('click', function() {
+      this.classList.toggle('active');
+      document.getElementById('mobileMenu').classList.toggle('active');
+    });
+    document.querySelectorAll('#mobileMenu a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        document.getElementById('hamburger').classList.remove('active');
+        document.getElementById('mobileMenu').classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>

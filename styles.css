@@ -199,7 +199,15 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 /* --- Hero --- */
 .hero { min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; }
 .hero-bg { position: absolute; inset: 0; }
-.hero-bg-img { width: 100%; height: 120%; object-fit: cover; position: absolute; top: -10%; will-change: transform; }
+.hero-bg-img {
+  width: 100%; height: 120%; object-fit: cover; position: absolute; top: -10%;
+  will-change: transform;
+  animation: kenBurns 20s var(--ease) infinite alternate;
+}
+@keyframes kenBurns {
+  0%   { transform: scale(1.05) translate(0, 0); }
+  100% { transform: scale(1.15) translate(-1.5%, -1%); }
+}
 .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, oklch(0.20 0.04 260 / 0.7) 0%, oklch(0.20 0.04 260 / 0.82) 60%, var(--bg) 100%); }
 .hero-content { position: relative; z-index: 1; padding-top: 100px; }
 .hero-text { max-width: 640px; }
@@ -300,9 +308,22 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   overflow: hidden;
   box-shadow: 0 4px 20px oklch(0.20 0.035 260 / 0.06), inset 0 1px 0 oklch(0.99 0.002 80 / 0.8);
 }
-.card-visual { height: 200px; overflow: hidden; }
+.card-visual { height: 200px; overflow: hidden; position: relative; }
 .card-visual img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--ease); }
 .card-shell:hover .card-visual img { transform: scale(1.04); }
+
+/* Reveal rideau — bloc accent qui glisse */
+.card-visual::after {
+  content: ''; position: absolute; inset: 0;
+  background: var(--accent);
+  transform-origin: right;
+  transform: scaleX(1);
+  transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: 1;
+}
+.anim.visible .card-visual::after {
+  transform: scaleX(0);
+}
 
 /* 3D Shine overlay — follows mouse via JS */
 .card-inner { position: relative; }
@@ -377,6 +398,20 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 .zone-card-shell { padding: 6px; }
 .zone-card { position: relative; aspect-ratio: 4/3; }
 .zone-img { width: 100%; height: 100%; object-fit: cover; border-radius: calc(var(--r-xl) - 6px); }
+
+/* Reveal rideau zone */
+.zone-card { overflow: hidden; }
+.zone-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--accent);
+  transform-origin: right;
+  transform: scaleX(1);
+  transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+  z-index: 1; border-radius: calc(var(--r-xl) - 6px);
+}
+.anim.visible .zone-card::before {
+  transform: scaleX(0);
+}
 .zone-overlay {
   position: absolute; inset: 0;
   border-radius: calc(var(--r-xl) - 6px);
@@ -571,6 +606,8 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 @media (prefers-reduced-motion: reduce) {
   .anim { transition-duration: 0.01ms !important; transform: none !important; opacity: 1 !important; }
   .scroll-cue-line { animation: none; }
+  .hero-bg-img { animation: none; }
+  .card-visual::after, .zone-card::before { transition-duration: 0.01ms !important; }
 }
 
 /* --- Responsive --- */

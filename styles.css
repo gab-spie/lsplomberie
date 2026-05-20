@@ -726,7 +726,13 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   font-family: var(--font-d);
   font-size: 1.1rem;
   color: var(--text);
-  margin-bottom: 0;
+  margin-bottom: 4px;
+}
+.certif-sub {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-m);
+  line-height: 1.4;
 }
 .certif-type {
   display: none;

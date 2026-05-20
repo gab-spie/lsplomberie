@@ -105,16 +105,23 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', updateParallax, { passive: true });
   updateParallax();
 
-  /* ---- 3D tilt on card-shell (high-end-visual) ---- */
+  /* ---- 3D tilt + shine on card-shell (high-end-visual) ---- */
   if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     document.querySelectorAll('.card-shell').forEach(shell => {
       const inner = shell.querySelector('.card-inner');
+      const shine = shell.querySelector('.card-shine');
       if (!inner) return;
       shell.addEventListener('mousemove', e => {
         const rect = shell.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        inner.style.transform = 'perspective(700px) rotateX(' + (y * -4) + 'deg) rotateY(' + (x * 4) + 'deg)';
+        const px = (e.clientX - rect.left) / rect.width;
+        const py = (e.clientY - rect.top) / rect.height;
+        const x = px - 0.5;
+        const y = py - 0.5;
+        inner.style.transform = 'perspective(700px) rotateX(' + (y * -6) + 'deg) rotateY(' + (x * 6) + 'deg)';
+        if (shine) {
+          shine.style.setProperty('--shine-x', (px * 100) + '%');
+          shine.style.setProperty('--shine-y', (py * 100) + '%');
+        }
       });
       shell.addEventListener('mouseleave', () => {
         inner.style.transform = '';

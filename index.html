@@ -12,23 +12,27 @@
 </head>
 <body>
 
-  <!-- Loader -->
-  <div class="loader" id="loader">
-    <div class="loader-inner">
-      <div class="loader-logo"><span class="loader-l">L</span><span class="loader-s">S</span></div>
-      <div class="loader-bar"><div class="loader-progress" id="loaderProgress"></div></div>
-      <div class="loader-text">Chargement</div>
+  <!-- Splash — carte de visite -->
+  <section class="splash" id="splash">
+    <div class="splash-inner">
+      <div class="splash-logo">
+        <span class="splash-ls">LS</span>
+        <span class="splash-plomberie">Plomberie</span>
+      </div>
+      <div class="splash-line"></div>
+      <p class="splash-slogan">Chauffage &middot; Sanitaire &middot; Climatisation</p>
+      <p class="splash-location">Varennes-le-Grand &mdash; depuis 2003</p>
+      <button class="splash-enter" id="splashEnter">
+        <span>D&eacute;couvrir</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256"><path fill="currentColor" d="M205.66,149.66l-72,72a8,8,0,0,1-11.32,0l-72-72a8,8,0,0,1,11.32-11.32L120,196.69V40a8,8,0,0,1,16,0V196.69l58.34-58.35a8,8,0,0,1,11.32,11.32Z"/></svg>
+      </button>
     </div>
-  </div>
-
-  <!-- Custom cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
+  </section>
 
   <!-- Navigation — floating pill -->
   <nav class="nav" id="nav">
     <div class="nav-pill">
-      <a href="#hero" class="nav-logo" data-hover>LS<span>Plomberie</span></a>
+      <a href="#hero" class="nav-logo" data-hover><span class="logo-ls">LS</span><span class="logo-plomberie">Plomberie</span></a>
       <div class="nav-links">
         <a href="#services" data-hover>Services</a>
         <a href="#expertise" data-hover>Expertise</a>
@@ -69,7 +73,7 @@
       </div>
       <div class="hero-content container">
         <div class="hero-text">
-          <div class="pill-tag anim" data-delay="0.3">Installation · D&eacute;pannage · Entretien</div>
+          <div class="section-tag anim" data-delay="0.3"><span class="tag-num">01</span><span class="tag-dash">&mdash;</span> Installation &middot; D&eacute;pannage &middot; Entretien</div>
           <h1 class="hero-title">
             <span class="line anim" data-delay="0.5">Votre plombier</span>
             <span class="line line-accent anim" data-delay="0.7">de&nbsp;confiance</span>
@@ -99,7 +103,7 @@
     <section class="section section-services" id="services">
       <div class="container">
         <div class="section-intro">
-          <div class="pill-tag anim">Nos&nbsp;m&eacute;tiers</div>
+          <div class="section-tag anim"><span class="tag-num">02</span><span class="tag-dash">&mdash;</span> Nos&nbsp;m&eacute;tiers</div>
           <h2 class="section-title anim">Des solutions pour<br>chaque&nbsp;besoin</h2>
         </div>
         <div class="services-grid">
@@ -168,7 +172,7 @@
       <div class="container">
         <div class="expertise-layout">
           <div class="expertise-left">
-            <div class="pill-tag pill-tag-light anim">Pourquoi me&nbsp;choisir</div>
+            <div class="section-tag section-tag-light anim"><span class="tag-num">03</span><span class="tag-dash">&mdash;</span> Pourquoi me&nbsp;choisir</div>
             <h2 class="section-title section-title-light anim">Un savoir-faire<br>reconnu</h2>
             <p class="expertise-desc anim">
               J'exerce depuis plus de 20&nbsp;ans dans la r&eacute;gion.
@@ -228,7 +232,7 @@
       <div class="container">
         <div class="zone-layout">
           <div class="zone-left">
-            <div class="pill-tag anim">Proximit&eacute;</div>
+            <div class="section-tag anim"><span class="tag-num">04</span><span class="tag-dash">&mdash;</span> Proximit&eacute;</div>
             <h2 class="section-title anim">Zone<br>d'intervention</h2>
             <p class="zone-desc anim">
               Bas&eacute; &agrave; Varennes-le-Grand, j'interviens dans un rayon
@@ -284,7 +288,7 @@
     <section class="section section-contact" id="contact">
       <div class="container">
         <div class="contact-header anim">
-          <div class="pill-tag">Contact</div>
+          <div class="section-tag anim"><span class="tag-num">05</span><span class="tag-dash">&mdash;</span> Contact</div>
           <h2 class="section-title">Parlons de votre&nbsp;projet</h2>
         </div>
         <div class="bento-grid">
@@ -296,8 +300,7 @@
                 <span>Disponible maintenant</span>
               </div>
               <div class="bento-phone-num">
-                <span class="bento-big-num">06&nbsp;83</span>
-                <span class="bento-big-num">39&nbsp;59&nbsp;37</span>
+                <span class="bento-big-num">06&nbsp;83&nbsp;39&nbsp;59&nbsp;37</span>
               </div>
               <div class="bento-phone-footer">
                 <span>Appel direct &middot; Devis gratuit</span>

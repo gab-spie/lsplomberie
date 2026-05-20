@@ -5,50 +5,22 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ---- Loader ---- */
-  const loader = document.getElementById('loader');
-  const loaderProgress = document.getElementById('loaderProgress');
-  let progress = 0;
+  /* ---- Splash — carte de visite ---- */
+  const splash = document.getElementById('splash');
+  const splashEnter = document.getElementById('splashEnter');
 
-  const tick = setInterval(() => {
-    progress += Math.random() * 20 + 5;
-    if (progress >= 100) {
-      progress = 100;
-      clearInterval(tick);
-      setTimeout(() => {
-        loader.classList.add('done');
-        document.getElementById('nav').classList.add('visible');
-        initObservers();
-      }, 350);
-    }
-    loaderProgress.style.width = progress + '%';
-  }, 70);
-
-  /* ---- Custom Cursor (spring-like follow) ---- */
-  const cursor = document.getElementById('cursor');
-  const dot = document.getElementById('cursorDot');
-  let cx = 0, cy = 0, dx = 0, dy = 0;
-
-  if (window.matchMedia('(pointer: fine)').matches) {
-    document.addEventListener('mousemove', e => {
-      cx = e.clientX; cy = e.clientY;
-      dot.style.left = cx + 'px';
-      dot.style.top = cy + 'px';
-    });
-
-    (function loop() {
-      dx += (cx - dx) * 0.12;
-      dy += (cy - dy) * 0.12;
-      cursor.style.left = dx + 'px';
-      cursor.style.top = dy + 'px';
-      requestAnimationFrame(loop);
-    })();
-
-    document.querySelectorAll('[data-hover]').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
+  function dismissSplash() {
+    splash.classList.add('done');
+    document.getElementById('nav').classList.add('visible');
+    initObservers();
   }
+
+  splashEnter.addEventListener('click', dismissSplash);
+
+  /* Auto-dismiss after 6s if user hasn't clicked */
+  setTimeout(() => {
+    if (!splash.classList.contains('done')) dismissSplash();
+  }, 6000);
 
   /* ---- Nav scroll ---- */
   const nav = document.getElementById('nav');

@@ -1,5 +1,6 @@
 /* ============================================
    LS PLOMBERIE — Premium Interactions
+   Skills: emil-design-eng + high-end-visual-design
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -9,43 +10,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const loaderProgress = document.getElementById('loaderProgress');
   let progress = 0;
 
-  const loaderInterval = setInterval(() => {
-    progress += Math.random() * 18 + 4;
+  const tick = setInterval(() => {
+    progress += Math.random() * 20 + 5;
     if (progress >= 100) {
       progress = 100;
-      clearInterval(loaderInterval);
+      clearInterval(tick);
       setTimeout(() => {
         loader.classList.add('done');
-        document.body.style.overflow = '';
         document.getElementById('nav').classList.add('visible');
-        startScrollAnimations();
-      }, 400);
+        initObservers();
+      }, 350);
     }
     loaderProgress.style.width = progress + '%';
-  }, 80);
+  }, 70);
 
-  /* ---- Custom Cursor ---- */
+  /* ---- Custom Cursor (spring-like follow) ---- */
   const cursor = document.getElementById('cursor');
-  const cursorDot = document.getElementById('cursorDot');
-  let cursorX = 0, cursorY = 0;
-  let dotX = 0, dotY = 0;
+  const dot = document.getElementById('cursorDot');
+  let cx = 0, cy = 0, dx = 0, dy = 0;
 
   if (window.matchMedia('(pointer: fine)').matches) {
-    document.addEventListener('mousemove', (e) => {
-      cursorX = e.clientX;
-      cursorY = e.clientY;
-      cursorDot.style.left = cursorX + 'px';
-      cursorDot.style.top = cursorY + 'px';
+    document.addEventListener('mousemove', e => {
+      cx = e.clientX; cy = e.clientY;
+      dot.style.left = cx + 'px';
+      dot.style.top = cy + 'px';
     });
 
-    function animateCursor() {
-      dotX += (cursorX - dotX) * 0.15;
-      dotY += (cursorY - dotY) * 0.15;
-      cursor.style.left = dotX + 'px';
-      cursor.style.top = dotY + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
+    (function loop() {
+      dx += (cx - dx) * 0.12;
+      dy += (cy - dy) * 0.12;
+      cursor.style.left = dx + 'px';
+      cursor.style.top = dy + 'px';
+      requestAnimationFrame(loop);
+    })();
 
     document.querySelectorAll('[data-hover]').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
@@ -55,14 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---- Nav scroll ---- */
   const nav = document.getElementById('nav');
-  const scrollContainer = document.getElementById('scrollContainer');
-
-  scrollContainer.addEventListener('scroll', () => {
-    if (scrollContainer.scrollTop > 60) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 
   /* ---- Hamburger ---- */
@@ -81,126 +72,115 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  /* ---- Smooth scroll for anchors ---- */
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      const id = anchor.getAttribute('href');
+  /* ---- Smooth scroll ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
       if (id === '#') return;
       const target = document.querySelector(id);
       if (target) {
         e.preventDefault();
         hamburger.classList.remove('active');
         mobileMenu.classList.remove('active');
-        target.scrollIntoView({ behavior: 'smooth' });
+        const y = target.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: y, behavior: 'smooth' });
       }
     });
   });
 
-  /* ---- Parallax ---- */
-  const parallaxLayers = document.querySelectorAll('.parallax-layer');
-
+  /* ---- Parallax (only transform + opacity — GPU safe) ---- */
+  const parallaxEls = document.querySelectorAll('[data-speed]');
   function updateParallax() {
-    const scrollY = scrollContainer.scrollTop;
-    parallaxLayers.forEach(el => {
-      const speed = parseFloat(el.dataset.speed) || 0.1;
-      const parent = el.closest('.hero-bg, .expertise-bg, .cta-bg');
+    const scrollY = window.scrollY;
+    parallaxEls.forEach(el => {
+      const speed = parseFloat(el.dataset.speed);
+      const parent = el.parentElement;
       if (!parent) return;
       const rect = parent.getBoundingClientRect();
       if (rect.bottom > 0 && rect.top < window.innerHeight) {
-        el.style.transform = 'translateY(' + (scrollY * speed) + 'px) scale(1.1)';
+        el.style.transform = 'translateY(' + (scrollY * speed) + 'px) scale(1.08)';
       }
     });
   }
+  window.addEventListener('scroll', updateParallax, { passive: true });
+  updateParallax();
 
-  scrollContainer.addEventListener('scroll', updateParallax, { passive: true });
+  /* ---- 3D tilt on card-shell (high-end-visual) ---- */
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('.card-shell').forEach(shell => {
+      const inner = shell.querySelector('.card-inner');
+      if (!inner) return;
+      shell.addEventListener('mousemove', e => {
+        const rect = shell.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        inner.style.transform = 'perspective(700px) rotateX(' + (y * -4) + 'deg) rotateY(' + (x * 4) + 'deg)';
+      });
+      shell.addEventListener('mouseleave', () => {
+        inner.style.transform = '';
+        inner.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+        setTimeout(() => inner.style.transition = '', 500);
+      });
+    });
 
-  /* ---- 3D Tilt on Cards ---- */
-  document.querySelectorAll('.card-3d').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = 'perspective(800px) rotateX(' + (y * -6) + 'deg) rotateY(' + (x * 6) + 'deg) translateZ(10px)';
+    /* Magnetic buttons */
+    document.querySelectorAll('.btn-primary, .nav-cta').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = 'translate(' + (x * 0.1) + 'px, ' + (y * 0.12) + 'px)';
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
     });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
+  }
 
-  document.querySelectorAll('.card-3d-light').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = 'perspective(600px) rotateX(' + (y * -4) + 'deg) rotateY(' + (x * 4) + 'deg) scale(1.02)';
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
-
-  /* ---- Magnetic buttons ---- */
-  document.querySelectorAll('.btn-primary, .nav-cta').forEach(btn => {
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      btn.style.transform = 'translate(' + (x * 0.12) + 'px, ' + (y * 0.15) + 'px)';
-    });
-    btn.addEventListener('mouseleave', () => {
-      btn.style.transform = '';
-    });
-  });
-
-  /* ---- Scroll-triggered Animations ---- */
-  function startScrollAnimations() {
-    const animElements = document.querySelectorAll('.anim-title, .anim-fade, .service-card, .stat-card, .feature-card');
-
-    const observer = new IntersectionObserver((entries) => {
+  /* ---- Scroll-triggered reveals (IntersectionObserver, not scroll listener) ---- */
+  function initObservers() {
+    const anims = document.querySelectorAll('.anim');
+    const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const el = entry.target;
-          const delay = parseFloat(el.dataset.delay) || (parseFloat(getComputedStyle(el).getPropertyValue('--index')) || 0) * 0.12;
-          setTimeout(() => el.classList.add('visible'), delay * 1000);
-          observer.unobserve(el);
+          const d = parseFloat(el.dataset.delay) || 0;
+          if (d > 0) {
+            setTimeout(() => el.classList.add('visible'), d * 1000);
+          } else {
+            el.classList.add('visible');
+          }
+          obs.unobserve(el);
         }
       });
-    }, { threshold: 0.1, root: scrollContainer });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-    animElements.forEach(el => observer.observe(el));
+    anims.forEach(el => obs.observe(el));
 
-    /* ---- Stat Counters ---- */
+    /* Stat counters */
     const statNums = document.querySelectorAll('.stat-num[data-target]');
-    const statObserver = new IntersectionObserver((entries) => {
+    const statObs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          animateCounter(entry.target, parseInt(entry.target.dataset.target, 10));
-          statObserver.unobserve(entry.target);
+          countUp(entry.target, parseInt(entry.target.dataset.target, 10));
+          statObs.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.5, root: scrollContainer });
-
-    statNums.forEach(el => statObserver.observe(el));
+    }, { threshold: 0.5 });
+    statNums.forEach(el => statObs.observe(el));
   }
 
-  function animateCounter(el, target) {
-    const duration = target > 1000 ? 2800 : 2000;
+  function countUp(el, target) {
+    const dur = target > 1000 ? 2600 : 1800;
     const start = performance.now();
-    const formatter = target >= 1000 ? new Intl.NumberFormat('fr-FR') : null;
+    const fmt = target >= 1000 ? new Intl.NumberFormat('fr-FR') : null;
 
-    function update(now) {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 4);
-      const current = Math.floor(eased * target);
-      el.textContent = formatter ? formatter.format(current) : current;
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      } else {
-        el.textContent = formatter ? formatter.format(target) : target;
-      }
-    }
-    requestAnimationFrame(update);
+    (function step(now) {
+      const t = Math.min((now - start) / dur, 1);
+      const ease = 1 - Math.pow(1 - t, 4);
+      const val = Math.floor(ease * target);
+      el.textContent = fmt ? fmt.format(val) : val;
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = fmt ? fmt.format(target) : target;
+    })(start);
   }
 
 });

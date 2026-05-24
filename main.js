@@ -542,29 +542,78 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(function() { paused = false; }, 2000);
     });
 
-    /* ---- Touch: finger swipe to drag ---- */
+    /* ---- Touch: finger swipe with momentum/inertia ---- */
     var touchStartX = 0;
     var touchDragStart = 0;
+    var touchLastX = 0;
+    var touchLastTime = 0;
+    var velocity = 0;
+    var momentumId = null;
+
+    function wrapScroll() {
+      var max = track.scrollWidth / 2;
+      if (scrollAmount < 0) scrollAmount += max;
+      if (scrollAmount >= max) scrollAmount -= max;
+    }
+
+    function stopMomentum() {
+      if (momentumId) {
+        cancelAnimationFrame(momentumId);
+        momentumId = null;
+      }
+    }
+
+    function applyMomentum() {
+      if (Math.abs(velocity) < 0.3) {
+        velocity = 0;
+        setTimeout(function() { paused = false; }, 1500);
+        return;
+      }
+      scrollAmount -= velocity;
+      velocity *= 0.95; /* friction */
+      wrapScroll();
+      track.style.transform = 'translateX(-' + scrollAmount + 'px)';
+      momentumId = requestAnimationFrame(applyMomentum);
+    }
 
     overflow.addEventListener('touchstart', function(e) {
       paused = true;
       wasDragged = false;
+      stopMomentum();
       touchStartX = e.touches[0].clientX;
+      touchLastX = touchStartX;
+      touchLastTime = Date.now();
       touchDragStart = scrollAmount;
+      velocity = 0;
     }, { passive: true });
 
     overflow.addEventListener('touchmove', function(e) {
-      var dx = e.touches[0].clientX - touchStartX;
+      var now = Date.now();
+      var x = e.touches[0].clientX;
+      var dx = x - touchStartX;
+
       if (Math.abs(dx) > 8) wasDragged = true;
+
+      /* Track velocity from last few frames */
+      var dt = now - touchLastTime;
+      if (dt > 0) {
+        velocity = (x - touchLastX) / dt * 16; /* px per frame at 60fps */
+      }
+      touchLastX = x;
+      touchLastTime = now;
+
       scrollAmount = touchDragStart - dx;
-      var max = track.scrollWidth / 2;
-      if (scrollAmount < 0) scrollAmount += max;
-      if (scrollAmount > max) scrollAmount -= max;
+      wrapScroll();
       track.style.transform = 'translateX(-' + scrollAmount + 'px)';
     }, { passive: true });
 
     overflow.addEventListener('touchend', function() {
-      setTimeout(function() { paused = false; }, 2500);
+      /* Apply momentum with the last known velocity */
+      if (Math.abs(velocity) > 1) {
+        applyMomentum();
+      } else {
+        setTimeout(function() { paused = false; }, 2000);
+      }
     });
   }
 

@@ -633,6 +633,26 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .testi-card:active { transform: scale(0.97); }
+
+/* Touch swipe mode (applied via JS on touch devices) */
+.testi-touch {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+  scrollbar-width: none;
+}
+.testi-touch::-webkit-scrollbar { display: none; }
+.testi-touch-track {
+  will-change: auto !important;
+  transform: none !important;
+  padding: 0 20px;
+}
+.testi-touch .testi-card {
+  scroll-snap-align: center;
+  width: 280px;
+}
 .testi-card > * {
   background: var(--bg-card);
   border-radius: calc(var(--r-xl) - 6px);
@@ -1080,22 +1100,4 @@ html.lenis, html.lenis body {
   .grain { display: none; }
   .footer-inner { justify-content: center; text-align: center; }
   .hero-bg-img { animation: none; }
-  .testi-overflow {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    mask-image: none;
-    -webkit-mask-image: none;
-    scrollbar-width: none;
-  }
-  .testi-overflow::-webkit-scrollbar { display: none; }
-  .testi-track {
-    will-change: auto;
-    transform: none !important;
-    padding: 0 20px;
-  }
-  .testi-card {
-    scroll-snap-align: center;
-    width: 280px;
-  }
 }

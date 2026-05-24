@@ -473,7 +473,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!track || !overflow) return;
 
     /* Google Reviews URL */
-    var googleReviewsUrl = 'https://www.google.com/maps/search/LS+Plomberie+Varennes-le-Grand';
+    var googleReviewsUrl = 'https://www.google.com/maps/place/LS+Plomberie/@46.7144707,4.8792444,663m/data=!3m3!1e3!4b1!5s0x47f31d5d84237ff3:0xd70fc552bb28cf7f!4m12!1m5!8m4!1e1!2s100690475566678368681!3m1!1e1!3m5!1s0x47f31d6b1682e5c1:0x983124906f6bf0e1!8m2!3d46.7144707!4d4.8818193!16s%2Fg%2F1tg_kznx?hl=fr-FR';
 
     /* Click on card → open Google reviews */
     track.querySelectorAll('.testi-card').forEach(function(card) {

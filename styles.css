@@ -634,25 +634,6 @@ button { background: none; border: none; color: inherit; cursor: pointer; font: 
 }
 .testi-card:active { transform: scale(0.97); }
 
-/* Touch swipe mode (applied via JS on touch devices) */
-.testi-touch {
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  mask-image: none !important;
-  -webkit-mask-image: none !important;
-  scrollbar-width: none;
-}
-.testi-touch::-webkit-scrollbar { display: none; }
-.testi-touch-track {
-  will-change: auto !important;
-  transform: none !important;
-  padding: 0 20px;
-}
-.testi-touch .testi-card {
-  scroll-snap-align: center;
-  width: 280px;
-}
 .testi-card > * {
   background: var(--bg-card);
   border-radius: calc(var(--r-xl) - 6px);

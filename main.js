@@ -465,62 +465,33 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ============================================================
-     TESTIMONIALS — Auto-scroll on desktop, native swipe on mobile
+     TESTIMONIALS — Auto-scroll + manual drag/swipe + click to Google
      ============================================================ */
   function initTestimonials() {
-    const track = document.querySelector('.testi-track');
-    const overflow = document.querySelector('.testi-overflow');
+    var track = document.querySelector('.testi-track');
+    var overflow = document.querySelector('.testi-overflow');
     if (!track || !overflow) return;
 
     /* Google Reviews URL */
     var googleReviewsUrl = 'https://www.google.com/maps/place/LS+Plomberie/@46.7144707,4.8792444,663m/data=!3m2!1e3!5s0x47f31d5d84237ff3:0xd70fc552bb28cf7f!4m14!1m5!8m4!1e1!2s100690475566678368681!3m1!1e1!3m7!1s0x47f31d6b1682e5c1:0x983124906f6bf0e1!8m2!3d46.7144707!4d4.8818193!9m1!1b1!16s%2Fg%2F1tg_kznx?hl=fr-FR';
 
-    /* Click on card → open Google reviews */
-    var touchStartX = 0;
-    var touchStartY = 0;
-    track.querySelectorAll('.testi-card').forEach(function(card) {
-      card.addEventListener('touchstart', function(e) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }, { passive: true });
-      card.addEventListener('click', function(e) {
-        /* Only open if it wasn't a drag/swipe */
-        if (!card._wasDragged) {
-          window.open(googleReviewsUrl, '_blank', 'noopener');
-        }
-        card._wasDragged = false;
-      });
-      card.addEventListener('touchend', function(e) {
-        var dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
-        var dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
-        if (dx > 10 || dy > 10) {
-          card._wasDragged = true;
-        }
-      });
-    });
-
-    /* ---- MOBILE: native scroll, no JS animation ---- */
-    if (isTouchDevice) {
-      /* Remove duplicate cards (no infinite loop needed for swipe) */
-      var cards = track.querySelectorAll('.testi-card');
-      var half = Math.floor(cards.length / 2);
-      for (var i = half; i < cards.length; i++) {
-        cards[i].remove();
-      }
-      /* Enable native touch scroll via classes */
-      overflow.classList.add('testi-touch');
-      track.classList.add('testi-touch-track');
-      return;
-    }
-
-    /* ---- DESKTOP: auto-scroll + mouse drag ---- */
+    /* ---- Shared state ---- */
     var scrollAmount = 0;
     var paused = false;
     var speed = 0.4;
+    var wasDragged = false;
 
-    track.addEventListener('mouseenter', function() { paused = true; });
-    track.addEventListener('mouseleave', function() { paused = false; });
+    /* ---- Click on card → open Google reviews (if not swiping) ---- */
+    track.querySelectorAll('.testi-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        if (!wasDragged) {
+          window.open(googleReviewsUrl, '_blank', 'noopener');
+        }
+        wasDragged = false;
+      });
+    });
 
+    /* ---- Auto-scroll (runs on ALL devices) ---- */
     function autoScroll() {
       if (!paused) {
         scrollAmount += speed;
@@ -533,17 +504,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     requestAnimationFrame(autoScroll);
 
-    /* Desktop mouse drag to scroll */
+    /* ---- Desktop: pause on hover + mouse drag ---- */
+    track.addEventListener('mouseenter', function() { paused = true; });
+    track.addEventListener('mouseleave', function() { if (!isDragging) paused = false; });
+
     var isDragging = false;
     var startX = 0;
     var dragStartScroll = 0;
-    var dragMoved = false;
 
     overflow.style.cursor = 'grab';
 
     overflow.addEventListener('mousedown', function(e) {
       isDragging = true;
-      dragMoved = false;
+      wasDragged = false;
       paused = true;
       startX = e.clientX;
       dragStartScroll = scrollAmount;
@@ -554,11 +527,11 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('mousemove', function(e) {
       if (!isDragging) return;
       var dx = e.clientX - startX;
-      if (Math.abs(dx) > 5) dragMoved = true;
+      if (Math.abs(dx) > 5) wasDragged = true;
       scrollAmount = dragStartScroll - dx;
-      if (scrollAmount < 0) scrollAmount = 0;
       var max = track.scrollWidth / 2;
-      if (scrollAmount > max) scrollAmount = max;
+      if (scrollAmount < 0) scrollAmount += max;
+      if (scrollAmount > max) scrollAmount -= max;
       track.style.transform = 'translateX(-' + scrollAmount + 'px)';
     });
 
@@ -566,11 +539,32 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isDragging) return;
       isDragging = false;
       overflow.style.cursor = 'grab';
-      /* Mark cards as dragged so click doesn't fire */
-      if (dragMoved) {
-        track.querySelectorAll('.testi-card').forEach(function(c) { c._wasDragged = true; });
-      }
-      setTimeout(function() { paused = false; }, 1500);
+      setTimeout(function() { paused = false; }, 2000);
+    });
+
+    /* ---- Touch: finger swipe to drag ---- */
+    var touchStartX = 0;
+    var touchDragStart = 0;
+
+    overflow.addEventListener('touchstart', function(e) {
+      paused = true;
+      wasDragged = false;
+      touchStartX = e.touches[0].clientX;
+      touchDragStart = scrollAmount;
+    }, { passive: true });
+
+    overflow.addEventListener('touchmove', function(e) {
+      var dx = e.touches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 8) wasDragged = true;
+      scrollAmount = touchDragStart - dx;
+      var max = track.scrollWidth / 2;
+      if (scrollAmount < 0) scrollAmount += max;
+      if (scrollAmount > max) scrollAmount -= max;
+      track.style.transform = 'translateX(-' + scrollAmount + 'px)';
+    }, { passive: true });
+
+    overflow.addEventListener('touchend', function() {
+      setTimeout(function() { paused = false; }, 2500);
     });
   }
 

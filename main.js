@@ -465,20 +465,45 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ============================================================
-     TESTIMONIALS — Auto-scroll carousel
+     TESTIMONIALS — Auto-scroll on desktop, native swipe on mobile
      ============================================================ */
   function initTestimonials() {
     const track = document.querySelector('.testi-track');
-    if (!track) return;
+    const overflow = document.querySelector('.testi-overflow');
+    if (!track || !overflow) return;
 
-    let scrollAmount = 0;
-    let paused = false;
-    const speed = 0.4;
+    /* Google Reviews URL */
+    var googleReviewsUrl = 'https://www.google.com/maps/search/LS+Plomberie+Varennes-le-Grand';
 
-    track.addEventListener('mouseenter', () => paused = true);
-    track.addEventListener('mouseleave', () => paused = false);
-    track.addEventListener('touchstart', () => paused = true, { passive: true });
-    track.addEventListener('touchend', () => { setTimeout(() => paused = false, 2000); });
+    /* Click on card → open Google reviews */
+    track.querySelectorAll('.testi-card').forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        /* Only open if it wasn't a drag/swipe */
+        if (!card._wasDragged) {
+          window.open(googleReviewsUrl, '_blank', 'noopener');
+        }
+        card._wasDragged = false;
+      });
+    });
+
+    /* ---- MOBILE: native scroll, no JS animation ---- */
+    if (isTouchDevice) {
+      /* Remove duplicate cards on mobile (no infinite loop needed) */
+      var cards = track.querySelectorAll('.testi-card');
+      var half = Math.floor(cards.length / 2);
+      for (var i = half; i < cards.length; i++) {
+        cards[i].remove();
+      }
+      return; /* Native scroll-snap handles everything */
+    }
+
+    /* ---- DESKTOP: auto-scroll + mouse drag ---- */
+    var scrollAmount = 0;
+    var paused = false;
+    var speed = 0.4;
+
+    track.addEventListener('mouseenter', function() { paused = true; });
+    track.addEventListener('mouseleave', function() { paused = false; });
 
     function autoScroll() {
       if (!paused) {
@@ -491,6 +516,46 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(autoScroll);
     }
     requestAnimationFrame(autoScroll);
+
+    /* Desktop mouse drag to scroll */
+    var isDragging = false;
+    var startX = 0;
+    var dragStartScroll = 0;
+    var dragMoved = false;
+
+    overflow.style.cursor = 'grab';
+
+    overflow.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      dragMoved = false;
+      paused = true;
+      startX = e.clientX;
+      dragStartScroll = scrollAmount;
+      overflow.style.cursor = 'grabbing';
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 5) dragMoved = true;
+      scrollAmount = dragStartScroll - dx;
+      if (scrollAmount < 0) scrollAmount = 0;
+      var max = track.scrollWidth / 2;
+      if (scrollAmount > max) scrollAmount = max;
+      track.style.transform = 'translateX(-' + scrollAmount + 'px)';
+    });
+
+    window.addEventListener('mouseup', function() {
+      if (!isDragging) return;
+      isDragging = false;
+      overflow.style.cursor = 'grab';
+      /* Mark cards as dragged so click doesn't fire */
+      if (dragMoved) {
+        track.querySelectorAll('.testi-card').forEach(function(c) { c._wasDragged = true; });
+      }
+      setTimeout(function() { paused = false; }, 1500);
+    });
   }
 
 });
